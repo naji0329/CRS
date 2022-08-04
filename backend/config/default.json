@@ -1,0 +1,9 @@
+{
+  "mongoURI": "mongodb+srv://root:root@cluster0.t4a1i.mongodb.net/?retryWrites=true&w=majority",
+  "jwtSecret": "secret",
+  "githubToken": "<yoursecrectaccesstoken>",
+  "AWS_S3_ACCESS_KEY_ID": "AKIARDY2J5OI4CI75MR5",
+  "AWS_S3_SECRET_ACCESS_KEY": "atjS3keEpfT957fNoNAdoarbmAnl3yHvRy0b+8W+",
+  "outlook_email": "uncut2022@outlook.com",
+  "outlook_password": "Password123!@3"
+}
