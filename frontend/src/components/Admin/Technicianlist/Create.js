@@ -29,7 +29,7 @@ function Create() {
     <div>
       <div className="n-container">
         <div className="flex justify-center">
-          <Link to={'/admin/dashboard'}>
+          <Link to={'/'}>
             <img src="/img/logo.png" className="cursor-pointer" alt="" />
           </Link>
         </div>

@@ -9,6 +9,7 @@ const MaintenanceePlanCheck = require('../../models/MaintenanceePlanCheck');
 // @access   Public
 router.post('/create', async (req, res) => {
   const {
+    planName,
     business,
     equipment,
     assignMainComponent,
@@ -19,6 +20,7 @@ router.post('/create', async (req, res) => {
 
   try {
     let maintenanceePlanCheck = new MaintenanceePlanCheck({
+      planName,
       business,
       equipment,
       assignMainComponent,
@@ -30,6 +32,32 @@ router.post('/create', async (req, res) => {
     technicianlist = await maintenanceePlanCheck.save();
 
     res.json({ maintenanceePlanCheck });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server error');
+  }
+});
+
+// @route    GET api/
+// @desc     Create Technicianlist
+// @access   Public
+router.get('/getPlans', async (req, res) => {
+  try {
+    const plans = await MaintenanceePlanCheck.find();
+    res.json(plans);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server error');
+  }
+});
+
+// @route    GET api/
+// @desc     Create Technicianlist
+// @access   Public
+router.get('/getPlan', async (req, res) => {
+  try {
+    const plan = await MaintenanceePlanCheck.findById(req.query.planId);
+    res.json(plan);
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server error');

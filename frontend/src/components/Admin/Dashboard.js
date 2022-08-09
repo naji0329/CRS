@@ -6,7 +6,7 @@ function Dashboard() {
     <div>
       <div className="n-container text-center">
         <div className="flex justify-center">
-          <Link to={'/admin/dashboard'}>
+          <Link to={'/'}>
             <img src="/img/logo.png" className="cursor-pointer" alt="" />
           </Link>
         </div>

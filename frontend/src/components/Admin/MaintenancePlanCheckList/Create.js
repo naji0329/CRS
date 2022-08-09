@@ -8,6 +8,7 @@ function Create() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
+    planName: '',
     business: '',
     equipment: '',
     assignMainComponent: '',
@@ -17,6 +18,7 @@ function Create() {
   });
 
   const {
+    planName,
     business,
     equipment,
     assignMainComponent,
@@ -40,7 +42,7 @@ function Create() {
     <div>
       <div className="n-container">
         <div className="flex justify-center">
-          <Link to={'/admin/dashboard'}>
+          <Link to={'/'}>
             <img src="/img/logo.png" className="cursor-pointer" alt="" />
           </Link>
         </div>
@@ -51,6 +53,16 @@ function Create() {
         <form className="form" onSubmit={onSubmit}>
           <div className="mt-20 flex justify-center items-center gap-20">
             <div>
+              <div className="mt-4">
+                <p className="font-medium">Plan Name</p>
+                <input
+                  type={'text'}
+                  name="planName"
+                  value={planName}
+                  onChange={onChange}
+                  className="border border-[#5C6BC0] px-4 py-2 w-full rounded shadow-sm mt-2"
+                />
+              </div>
               <div className="mt-4">
                 <p className="font-medium">Business</p>
                 <input

@@ -1,6 +1,10 @@
 const mongoose = require('mongoose');
 
 const MaintenacePlanCheckSchema = new mongoose.Schema({
+  planName: {
+    type: String,
+    required: true
+  },
   business: {
     type: String,
     required: true
@@ -24,6 +28,10 @@ const MaintenacePlanCheckSchema = new mongoose.Schema({
   notesSecondaryComponent: {
     type: String,
     required: true
+  },
+  date: {
+    type: Date,
+    default: Date.now
   }
 });
 
