@@ -1,5 +1,0 @@
-{
-  "mongoURI": "mongodb+srv://root:root@cluster0.t4a1i.mongodb.net/?retryWrites=true&w=majority",
-  "jwtSecret": "secret",
-  "githubToken": "<yoursecrectaccesstoken>"
-}
