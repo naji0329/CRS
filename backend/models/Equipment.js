@@ -2,32 +2,28 @@ const mongoose = require('mongoose');
 
 const EquipmentSchema = new mongoose.Schema({
   businessName: {
-    type: String,
-    required: true
+    type: String
   },
   description: {
-    type: String,
-    required: true
+    type: String
   },
   brand: {
-    type: String,
-    required: true
+    type: String
   },
   model: {
-    type: String,
-    required: true
+    type: String
   },
   serialNumber: {
-    type: String,
-    required: true
+    type: String
   },
   voltage: {
-    type: String,
-    required: true
+    type: String
   },
   location: {
-    type: String,
-    required: true
+    type: String
+  },
+  file: {
+    type: String
   }
 });
 

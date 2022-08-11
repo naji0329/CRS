@@ -17,6 +17,15 @@ function Pmp() {
     getPlans();
   }, []);
 
+  const [technicians, setTechnicians] = useState([]);
+  useEffect(() => {
+    async function getTechnicianData() {
+      const res = await api.get('/technicianlists');
+      setTechnicians(res.data);
+    }
+    getTechnicianData();
+  }, []);
+
   async function nextPage() {
     if (selectedPlan) {
       navigate('/technician/plan?planId=' + selectedPlan);
@@ -44,11 +53,11 @@ function Pmp() {
           <select
             className="border border-[#5C6BC0] px-2 py-2 w-full rounded shadow-sm mt-2"
             onChange={(e) => changePlan(e)}>
-            <option>Select Plan</option>
-            {plans.map((row, key) => {
+            <option>Select Technician</option>
+            {technicians.map((row, key) => {
               return (
                 <option key={key} value={row._id}>
-                  {row.planName}
+                  {row.name}
                 </option>
               );
             })}

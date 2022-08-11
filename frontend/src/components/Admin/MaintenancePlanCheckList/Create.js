@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 // import { setAlert } from '../../../actions/alert';
 import { useDispatch } from 'react-redux';
 import { createMaintenancePlanCheckList } from '../../../actions/maintenanceplanchecklist';
+import api from '../../../utils/api';
 
 function Create() {
   const dispatch = useDispatch();
@@ -20,12 +21,38 @@ function Create() {
   const {
     planName,
     business,
-    equipment,
     assignMainComponent,
     notesMainComponent,
     assignSecondaryComponent,
     notesSecondaryComponent
   } = formData;
+
+  const [businesses, setBusinesses] = useState([]);
+  useEffect(() => {
+    async function getCustomersData() {
+      const res = await api.get('/customers/');
+      console.log(res.data);
+      if (res.data) {
+        setBusinesses(res.data);
+      }
+    }
+    getCustomersData();
+  }, []);
+
+  const [equipments, setEquipments] = useState([]);
+  useEffect(() => {
+    async function getEquipmentDataByBusiness() {
+      console.log(business);
+      const res = await api.post('/equipments/getEquipmentDataByBusiness', {
+        business: business
+      });
+      console.log(res.data);
+      setEquipments(res.data);
+    }
+    if (business) {
+      getEquipmentDataByBusiness();
+    }
+  }, [business]);
 
   const onChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
 
@@ -65,23 +92,38 @@ function Create() {
               </div>
               <div className="mt-4">
                 <p className="font-medium">Business</p>
-                <input
-                  type={'text'}
-                  name="business"
-                  value={business}
+                <select
+                  className="border border-[#5C6BC0] px-2 py-2 w-full rounded shadow-sm mt-2"
                   onChange={onChange}
-                  className="border border-[#5C6BC0] px-4 py-2 w-full rounded shadow-sm mt-2"
-                />
+                  name="business">
+                  <option>Select Business</option>
+                  {businesses.map((row, key) => {
+                    return (
+                      <option key={key} value={row.business_name}>
+                        {row.business_name}
+                      </option>
+                    );
+                  }, [])}
+                </select>
               </div>
               <div className="mt-4">
                 <p className="font-medium">Equipment</p>
-                <input
+                <div className="mt-2 flex gap-3">
+                  {equipments.map((row, key) => {
+                    return (
+                      <p key={key} className="cursor-pointer">
+                        {row.description}
+                      </p>
+                    );
+                  })}
+                </div>
+                {/* <input
                   type={'text'}
                   name="equipment"
                   value={equipment}
                   onChange={onChange}
                   className="border border-[#5C6BC0] px-4 py-2 w-full rounded shadow-sm mt-2"
-                />
+                /> */}
               </div>
             </div>
             <div>

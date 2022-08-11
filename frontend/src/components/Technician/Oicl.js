@@ -8,7 +8,6 @@ function Oicl() {
   const planId = params.get('planId');
 
   const [planInfo, setPlanInfo] = useState();
-
   useEffect(() => {
     async function getPlanData() {
       if (planId) {
@@ -16,7 +15,6 @@ function Oicl() {
         setPlanInfo(res.data);
       }
     }
-
     getPlanData();
   }, []);
 
