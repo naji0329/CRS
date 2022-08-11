@@ -18,16 +18,15 @@ function Create() {
     model: ''
   });
   const [businesses, setBusinesses] = useState([]);
-
   useEffect(() => {
-    async function getData() {
+    async function getCustomersData() {
       const res = await api.get('/customers/');
       console.log(res.data);
       if (res.data) {
         setBusinesses(res.data);
       }
     }
-    getData();
+    getCustomersData();
   }, []);
 
   const { businessName, serialNumber, description, voltage, brand, location, model } = formData;
@@ -116,12 +115,6 @@ function Create() {
               <div>
                 <div>
                   <p className="font-medium">Business Name</p>
-                  {/* <input
-                    type={'text'}
-                    name="businessName"
-                    value={businessName}
-                    onChange={onChange}
-                  /> */}
                   <select
                     className="border border-[#5C6BC0] px-2 py-2 w-full rounded shadow-sm mt-2"
                     onChange={onChange}
