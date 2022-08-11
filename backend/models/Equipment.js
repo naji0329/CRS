@@ -24,6 +24,12 @@ const EquipmentSchema = new mongoose.Schema({
   },
   file: {
     type: String
+  },
+  mainComponentlists: {
+    type: Array
+  },
+  secondaryLists: {
+    type: Array
   }
 });
 

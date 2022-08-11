@@ -63,20 +63,20 @@ function Create() {
             </div>
             <div className="mt-10 flex justify-center items-end">
               <div className="">
-                <div>
-                  <input
-                    type="submit"
-                    value={isLoading ? 'Loading' : 'Create'}
-                    disabled={isLoading}
-                    className="w-32 px-6 py-3 border border-[#5C6BC0] text-[#5C6BC0] cursor-pointer font-medium rounded shadow-lg"
-                  />
-                </div>
                 <div className="mt-5">
                   <Link to={'/admin/dashboard'}>
                     <button className="w-32 px-6 py-3 border border-[#5C6BC0] text-[#5C6BC0] cursor-pointer font-medium rounded shadow-lg">
                       Back
                     </button>
                   </Link>
+                </div>
+                <div className="mt-5">
+                  <input
+                    type="submit"
+                    value={isLoading ? 'Loading' : 'Create'}
+                    disabled={isLoading}
+                    className="w-32 px-6 py-3 border border-[#5C6BC0] text-[#5C6BC0] cursor-pointer font-medium rounded shadow-lg"
+                  />
                 </div>
               </div>
             </div>
