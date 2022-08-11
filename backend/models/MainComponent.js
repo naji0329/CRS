@@ -1,19 +1,11 @@
 const mongoose = require('mongoose');
 
 const MainComponentSchema = new mongoose.Schema({
-  filter: {
+  type: {
     type: String,
     required: true
   },
-  filterSize: {
-    type: String,
-    required: true
-  },
-  belt: {
-    type: String,
-    required: true
-  },
-  beltSize: {
+  name: {
     type: String,
     required: true
   }

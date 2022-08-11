@@ -8,11 +8,11 @@ function Create() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    description: '',
-    instruction: ''
+    name: '',
+    description: ''
   });
 
-  const { description, instruction } = formData;
+  const { name, description } = formData;
 
   const onChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
 
@@ -45,8 +45,8 @@ function Create() {
     e.preventDefault();
 
     let newFormdata = new FormData();
+    newFormdata.append('name', name);
     newFormdata.append('description', description);
-    newFormdata.append('instruction', instruction);
     newFormdata.append('file', file);
 
     const res = await dispatch(createSecondaryList(newFormdata));
@@ -91,22 +91,22 @@ function Create() {
                 </div>
               </div>
               <div>
-                <div>
-                  <p className="font-medium">Description</p>
+                <div className="mt-4">
+                  <p className="font-medium">Name</p>
                   <input
                     type={'text'}
-                    name="description"
-                    value={description}
+                    name="name"
+                    value={name}
                     onChange={onChange}
                     className="border border-[#5C6BC0] px-4 py-2 w-full rounded shadow-sm mt-2"
                   />
                 </div>
                 <div className="mt-4">
-                  <p className="font-medium">Special Instructions</p>
+                  <p className="font-medium">Description</p>
                   <input
                     type={'text'}
-                    name="instruction"
-                    value={instruction}
+                    name="description"
+                    value={description}
                     onChange={onChange}
                     className="border border-[#5C6BC0] px-4 py-2 w-full rounded shadow-sm mt-2"
                   />
