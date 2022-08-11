@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 // import { setAlert } from '../../../actions/alert';
 import { useDispatch } from 'react-redux';
 import { createEquipment } from '../../../actions/equipment';
+import api from '../../../utils/api';
 
 function Create() {
   const dispatch = useDispatch();
@@ -16,6 +17,18 @@ function Create() {
     location: '',
     model: ''
   });
+  const [businesses, setBusinesses] = useState([]);
+
+  useEffect(() => {
+    async function getData() {
+      const res = await api.get('/customers/');
+      console.log(res.data);
+      if (res.data) {
+        setBusinesses(res.data);
+      }
+    }
+    getData();
+  }, []);
 
   const { businessName, serialNumber, description, voltage, brand, location, model } = formData;
 
@@ -78,7 +91,7 @@ function Create() {
         <div className="mt-20 m-auto">
           <form className="form" onSubmit={onSubmit}>
             <div className="grid grid-cols-3 justify-center gap-20">
-              <div className="flex ">
+              <div className="flex justify-end items-center">
                 <div
                   className="border border-[#5C6BC0] rounded-xl p-4 h-64 w-64"
                   onClick={handleClick}>
@@ -103,13 +116,25 @@ function Create() {
               <div>
                 <div>
                   <p className="font-medium">Business Name</p>
-                  <input
+                  {/* <input
                     type={'text'}
                     name="businessName"
                     value={businessName}
                     onChange={onChange}
-                    className="border border-[#5C6BC0] px-4 py-2 w-full rounded shadow-sm mt-2"
-                  />
+                  /> */}
+                  <select
+                    className="border border-[#5C6BC0] px-2 py-2 w-full rounded shadow-sm mt-2"
+                    onChange={onChange}
+                    name="businessName">
+                    <option>Select Business</option>
+                    {businesses.map((row, key) => {
+                      return (
+                        <option key={key} value={row.business_name}>
+                          {row.business_name}
+                        </option>
+                      );
+                    }, [])}
+                  </select>
                 </div>
                 <div className="mt-4">
                   <p className="font-medium">Description</p>

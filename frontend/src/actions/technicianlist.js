@@ -24,6 +24,7 @@ export const createTechnicianlist = (formData) => async (dispatch) => {
     dispatch(setAlert('Successfully created.', 'success'));
     return true;
   } catch (err) {
+    dispatch(setAlert(err.response.data.errors[0].msg, 'error'));
     dispatch({
       type: TECHNICIANLIST_ERROR,
       payload: { msg: err.response.statusText, status: err.response.status }

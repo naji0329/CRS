@@ -40,6 +40,21 @@ function Pmp() {
         <h1 className="text-4xl font-bold underline">Pick Maintenance Plan</h1>
 
         <div className="mt-20 max-w-[400px] m-auto text-left">
+          <p>Technician Name</p>
+          <select
+            className="border border-[#5C6BC0] px-2 py-2 w-full rounded shadow-sm mt-2"
+            onChange={(e) => changePlan(e)}>
+            <option>Select Plan</option>
+            {plans.map((row, key) => {
+              return (
+                <option key={key} value={row._id}>
+                  {row.planName}
+                </option>
+              );
+            })}
+          </select>
+        </div>
+        <div className="mt-10 max-w-[400px] m-auto text-left">
           <p>Pick Plan</p>
           <select
             className="border border-[#5C6BC0] px-2 py-2 w-full rounded shadow-sm mt-2"
