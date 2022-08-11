@@ -11,10 +11,13 @@ import { CREATE_MAINCOMPONENTLIST, MAINCOMPONENTLIST_ERROR } from './types';
 */
 
 // Get current users profile
-export const createMainComponentList = (formData) => async (dispatch) => {
+export const createMainComponentList = (type, name) => async (dispatch) => {
   try {
-    console.log('createTechnicianlist', formData);
-    const res = await api.post('/maincomponentlists/create', formData);
+    console.log('createTechnicianlist');
+    const res = await api.post('/maincomponentlists/create', {
+      type,
+      name
+    });
 
     dispatch({
       type: CREATE_MAINCOMPONENTLIST,
@@ -24,6 +27,7 @@ export const createMainComponentList = (formData) => async (dispatch) => {
     dispatch(setAlert('Successfully created.', 'success'));
     return true;
   } catch (err) {
+    console.log(err);
     dispatch({
       type: MAINCOMPONENTLIST_ERROR,
       payload: { msg: err.response.statusText, status: err.response.status }
