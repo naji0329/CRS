@@ -1,11 +1,11 @@
 const mongoose = require('mongoose');
 
 const SecondarySchema = new mongoose.Schema({
-  description: {
+  name: {
     type: String,
     required: true
   },
-  specialInstruction: {
+  description: {
     type: String,
     required: true
   },

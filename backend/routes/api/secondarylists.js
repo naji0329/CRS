@@ -15,13 +15,26 @@ router.post('/create', async (req, res) => {
     form.parse(req, async function (err, fields, files) {
       let secondarylist = new Secondarylist({
         description: fields.description,
-        specialInstruction: fields.instruction,
+        name: fields.name,
         file: ' '
       });
 
       secondarylist = await secondarylist.save();
       res.json({ secondarylist });
     });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server error');
+  }
+});
+
+// @route    GET api/maincomponentlists
+// @desc     Get MainComponent Lists
+// @access   Public
+router.get('/', async (req, res) => {
+  try {
+    let secondarylists = await Secondarylist.find();
+    res.json(secondarylists);
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server error');

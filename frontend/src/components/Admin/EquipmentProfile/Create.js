@@ -4,10 +4,12 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { createEquipment } from '../../../actions/equipment';
 import api from '../../../utils/api';
+import Multiselect from 'multiselect-react-dropdown';
 
 function Create() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [isLoading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     businessName: '',
     serialNumber: '',
@@ -28,6 +30,47 @@ function Create() {
     }
     getCustomersData();
   }, []);
+
+  const [mainComponentlists, setMainComponentlists] = useState([]);
+  useEffect(() => {
+    async function getMainComponents() {
+      const res = await api.get('/maincomponentlists');
+      console.log(res.data);
+      if (res.data) {
+        setMainComponentlists(res.data);
+      }
+    }
+    getMainComponents();
+  }, []);
+  const [selectedSecondaryLists, setSelectedSecondaryLists] = useState([]);
+  async function onSelectSecondaryLists(selectedList, selectedItem) {
+    console.log(selectedList, selectedItem);
+    setSelectedSecondaryLists(selectedList);
+  }
+  async function onRemoveSecondaryLists(selectedList, selectedItem) {
+    console.log(selectedList, selectedItem);
+    setSelectedSecondaryLists(selectedList);
+  }
+
+  const [secondarylists, setSecondarylists] = useState([]);
+  useEffect(() => {
+    async function getSecondaryLists() {
+      const res = await api.get('/secondarylists');
+      if (res.data) {
+        setSecondarylists(res.data);
+      }
+    }
+    getSecondaryLists();
+  }, []);
+  const [selectedMainComponentLists, setSelectedMainComponentLists] = useState([]);
+  async function onSelectMainComponentLists(selectedList, selectedItem) {
+    console.log(selectedList, selectedItem);
+    setSelectedMainComponentLists(selectedList);
+  }
+  async function onRemoveMainComponentLists(selectedList, selectedItem) {
+    console.log(selectedList, selectedItem);
+    setSelectedMainComponentLists(selectedList);
+  }
 
   const { businessName, serialNumber, description, voltage, brand, location, model } = formData;
 
@@ -60,6 +103,7 @@ function Create() {
 
   const onSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
     let newFormdata = new FormData();
     newFormdata.append('businessName', businessName);
@@ -70,8 +114,11 @@ function Create() {
     newFormdata.append('location', location);
     newFormdata.append('model', model);
     newFormdata.append('file', file);
+    newFormdata.append('mainComponentlists', selectedMainComponentLists);
+    newFormdata.append('secondaryLists', selectedSecondaryLists);
 
     const res = await dispatch(createEquipment(newFormdata));
+    setLoading(false);
     if (res) {
       navigate('/admin/dashboard');
     }
@@ -183,27 +230,50 @@ function Create() {
                 </div>
                 <div className="mt-4">
                   <p className="font-medium">Location(Indoor/Outdoor)</p>
-                  <input
-                    type={'text'}
-                    name="location"
-                    value={location}
+                  <select
                     onChange={onChange}
-                    className="border border-[#5C6BC0] px-4 py-2 w-full rounded shadow-sm mt-2"
+                    name="location"
+                    className="border border-[#5C6BC0] px-4 py-2 w-full rounded shadow-sm mt-2">
+                    <option value={'indoor'}>Indoor</option>
+                    <option value={'outdoor'}>Outdoor</option>
+                  </select>
+                </div>
+                <div className="mt-4">
+                  <p className="font-medium">Main Component Lists</p>
+                  <Multiselect
+                    options={mainComponentlists} // Options to display in the dropdown
+                    // selectedValues={this.state.selectedValue} // Preselected value to persist in dropdown
+                    onSelect={onSelectMainComponentLists} // Function will trigger on select event
+                    onRemove={onRemoveMainComponentLists} // Function will trigger on remove event
+                    displayValue="name" // Property name to display in the dropdown options
+                    className="border border-[#5C6BC0] w-full rounded shadow-sm mt-2"
+                  />
+                </div>
+                <div className="mt-4">
+                  <p className="font-medium">Secondary Lists</p>
+                  <Multiselect
+                    options={secondarylists} // Options to display in the dropdown
+                    // selectedValues={this.state.selectedValue} // Preselected value to persist in dropdown
+                    onSelect={onSelectSecondaryLists} // Function will trigger on select event
+                    onRemove={onRemoveSecondaryLists} // Function will trigger on remove event
+                    displayValue="name" // Property name to display in the dropdown options
+                    className="border border-[#5C6BC0] w-full rounded shadow-sm mt-2"
                   />
                 </div>
               </div>
             </div>
             <div className="mt-10 flex justify-center gap-5">
-              <input
-                type="submit"
-                value={'Create'}
-                className="w-32 px-6 py-3 border border-[#5C6BC0] text-[#5C6BC0] cursor-pointer font-medium rounded shadow-lg"
-              />
               <Link to={'/admin/dashboard'}>
                 <button className="w-32 px-6 py-3 border border-[#5C6BC0] text-[#5C6BC0] cursor-pointer font-medium rounded shadow-lg">
                   Back
                 </button>
               </Link>
+              <input
+                type="submit"
+                disabled={isLoading}
+                value={isLoading ? 'Loading' : 'Create'}
+                className="w-32 px-6 py-3 border border-[#5C6BC0] text-[#5C6BC0] cursor-pointer font-medium rounded shadow-lg"
+              />
             </div>
           </form>
         </div>

@@ -23,4 +23,17 @@ router.post('/create', async (req, res) => {
   }
 });
 
+// @route    GET api/maincomponentlists
+// @desc     Get MainComponent Lists
+// @access   Public
+router.get('/', async (req, res) => {
+  try {
+    let mainComponents = await MainComponent.find();
+    res.json(mainComponents);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server error');
+  }
+});
+
 module.exports = router;
