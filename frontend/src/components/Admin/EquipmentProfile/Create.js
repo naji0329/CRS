@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import { createEquipment } from '../../../actions/equipment';
 import api from '../../../utils/api';
 import Multiselect from 'multiselect-react-dropdown';
+import { setAlert } from '../../../actions/alert';
 
 function Create() {
   const dispatch = useDispatch();
@@ -103,6 +104,11 @@ function Create() {
 
   const onSubmit = async (e) => {
     e.preventDefault();
+
+    if (!businessName) {
+      dispatch(setAlert('Please select Business Name', 'warning'));
+      return false;
+    }
     setLoading(true);
 
     let newFormdata = new FormData();
@@ -114,8 +120,10 @@ function Create() {
     newFormdata.append('location', location);
     newFormdata.append('model', model);
     newFormdata.append('file', file);
-    newFormdata.append('mainComponentlists', selectedMainComponentLists);
-    newFormdata.append('secondaryLists', selectedSecondaryLists);
+    newFormdata.append('mainComponentlists', JSON.stringify(selectedMainComponentLists));
+    newFormdata.append('secondaryLists', JSON.stringify(selectedSecondaryLists));
+
+    console.log('selectedMainComponentLists', selectedMainComponentLists);
 
     const res = await dispatch(createEquipment(newFormdata));
     setLoading(false);

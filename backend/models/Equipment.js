@@ -25,12 +25,8 @@ const EquipmentSchema = new mongoose.Schema({
   file: {
     type: String
   },
-  mainComponentlists: {
-    type: Array
-  },
-  secondaryLists: {
-    type: Array
-  }
+  mainComponentlists: [],
+  secondaryLists: []
 });
 
 module.exports = mongoose.model('equipment', EquipmentSchema);

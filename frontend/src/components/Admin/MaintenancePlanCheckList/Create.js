@@ -4,34 +4,25 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { createMaintenancePlanCheckList } from '../../../actions/maintenanceplanchecklist';
 import api from '../../../utils/api';
+import Multiselect from 'multiselect-react-dropdown';
 
 function Create() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [isLoading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     planName: '',
     business: '',
-    equipment: '',
-    assignMainComponent: '',
-    notesMainComponent: '',
-    assignSecondaryComponent: '',
-    notesSecondaryComponent: ''
+    equipments: []
   });
+  const epuipmentsMultiselectRef = React.createRef();
 
-  const {
-    planName,
-    business,
-    assignMainComponent,
-    notesMainComponent,
-    assignSecondaryComponent,
-    notesSecondaryComponent
-  } = formData;
+  const { planName, business, equipments } = formData;
 
   const [businesses, setBusinesses] = useState([]);
   useEffect(() => {
     async function getCustomersData() {
       const res = await api.get('/customers/');
-      console.log(res.data);
       if (res.data) {
         setBusinesses(res.data);
       }
@@ -39,27 +30,37 @@ function Create() {
     getCustomersData();
   }, []);
 
-  const [equipments, setEquipments] = useState([]);
+  const [equipmentsData, setEquipmentsData] = useState([]);
   useEffect(() => {
     async function getEquipmentDataByBusiness() {
-      console.log(business);
+      setFormData({ ...formData, ['equipments']: [] });
+      epuipmentsMultiselectRef.current.resetSelectedValues();
       const res = await api.post('/equipments/getEquipmentDataByBusiness', {
         business: business
       });
-      console.log(res.data);
-      setEquipments(res.data);
+      setEquipmentsData(res.data);
     }
     if (business) {
       getEquipmentDataByBusiness();
     }
   }, [business]);
 
+  async function onSelectEquipments(selectedList) {
+    setFormData({ ...formData, ['equipments']: selectedList });
+  }
+  async function onRemoveEquipments(selectedList) {
+    setFormData({ ...formData, ['equipments']: selectedList });
+  }
+
   const onChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
 
   const onSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
     const res = await dispatch(createMaintenancePlanCheckList(formData));
+    setLoading(false);
+
     if (res) {
       navigate('/admin/dashboard');
     }
@@ -79,7 +80,7 @@ function Create() {
 
         <form className="form" onSubmit={onSubmit}>
           <div className="mt-20 flex justify-center items-center gap-20">
-            <div>
+            <div className="w-1/3">
               <div className="mt-4">
                 <p className="font-medium">Plan Name</p>
                 <input
@@ -109,82 +110,55 @@ function Create() {
               <div className="mt-4">
                 <p className="font-medium">Equipment</p>
                 <div className="mt-2 flex gap-3">
-                  {equipments.map((row, key) => {
-                    return (
-                      <p key={key} className="cursor-pointer">
-                        {row.description}
-                      </p>
-                    );
-                  })}
-                </div>
-                {/* <input
-                  type={'text'}
-                  name="equipment"
-                  value={equipment}
-                  onChange={onChange}
-                  className="border border-[#5C6BC0] px-4 py-2 w-full rounded shadow-sm mt-2"
-                /> */}
-              </div>
-            </div>
-            <div>
-              <div className="mt-4 mr-20">
-                <p className="font-medium">Assign Main Component</p>
-                <input
-                  type={'text'}
-                  name="assignMainComponent"
-                  value={assignMainComponent}
-                  onChange={onChange}
-                  className="border border-[#5C6BC0] px-4 py-2 w-full rounded shadow-sm mt-2"
-                />
-              </div>
-              <div className="mt-4 ml-20">
-                <p className="font-medium">Allow technician notes</p>
-                <input
-                  type={'text'}
-                  name="notesMainComponent"
-                  value={notesMainComponent}
-                  onChange={onChange}
-                  className="border border-[#5C6BC0] px-4 py-2 w-full rounded shadow-sm mt-2"
-                />
-              </div>
-              <div className="mt-4 mr-20">
-                <p className="font-medium">Assign Secondary Component</p>
-                <input
-                  type={'text'}
-                  name="assignSecondaryComponent"
-                  value={assignSecondaryComponent}
-                  onChange={onChange}
-                  className="border border-[#5C6BC0] px-4 py-2 w-full rounded shadow-sm mt-2"
-                />
-              </div>
-              <div className="mt-4 ml-20">
-                <p className="font-medium">Allow technician notes</p>
-                <input
-                  type={'text'}
-                  name="notesSecondaryComponent"
-                  value={notesSecondaryComponent}
-                  onChange={onChange}
-                  className="border border-[#5C6BC0] px-4 py-2 w-full rounded shadow-sm mt-2"
-                />
-              </div>
-            </div>
-            <div className="mt-10 flex justify-center items-center">
-              <div className="">
-                <div className="mt-5">
-                  <Link to={'/admin/dashboard'}>
-                    <button className="w-32 px-6 py-3 border border-[#5C6BC0] text-[#5C6BC0] cursor-pointer font-medium rounded shadow-lg">
-                      Back
-                    </button>
-                  </Link>
-                </div>
-                <div className="mt-5">
-                  <input
-                    type="submit"
-                    value={'Create'}
-                    className="w-32 px-6 py-3 border border-[#5C6BC0] text-[#5C6BC0] cursor-pointer font-medium rounded shadow-lg"
+                  <Multiselect
+                    options={equipmentsData} // Options to display in the dropdown
+                    onSelect={onSelectEquipments} // Function will trigger on select event
+                    onRemove={onRemoveEquipments} // Function will trigger on remove event
+                    displayValue="description" // Property name to display in the dropdown options
+                    ref={epuipmentsMultiselectRef}
+                    className="border border-[#5C6BC0] w-full rounded shadow-sm mt-2"
                   />
                 </div>
               </div>
+            </div>
+            <div className="w-1/3">
+              <p className="text-lg">Main Component List</p>
+              <div className="pl-4">
+                {equipments.map((equ) => {
+                  return (
+                    <ul className="list-disc" key={equ._id}>
+                      {equ.mainComponentlists.map((row) => {
+                        return <li key={row}>{row.name}</li>;
+                      })}
+                    </ul>
+                  );
+                })}
+              </div>
+              <p className="text-lg mt-4">Secondary List</p>
+              <div className="pl-4">
+                {equipments.map((equ) => {
+                  return (
+                    <ul className="list-disc" key={equ._id}>
+                      {equ.secondaryLists.map((row) => {
+                        return <li key={row._id}>{row.name}</li>;
+                      })}
+                    </ul>
+                  );
+                })}
+              </div>
+            </div>
+            <div className="mt-10 flex justify-center gap-5">
+              <Link to={'/admin/dashboard'}>
+                <button className="w-32 px-6 py-3 border border-[#5C6BC0] text-[#5C6BC0] cursor-pointer font-medium rounded shadow-lg">
+                  Back
+                </button>
+              </Link>
+              <input
+                type="submit"
+                disabled={isLoading}
+                value={isLoading ? 'Loading' : 'Create'}
+                className="w-32 px-6 py-3 border border-[#5C6BC0] text-[#5C6BC0] cursor-pointer font-medium rounded shadow-lg"
+              />
             </div>
           </div>
         </form>

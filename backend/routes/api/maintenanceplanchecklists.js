@@ -8,25 +8,13 @@ const MaintenanceePlanCheck = require('../../models/MaintenanceePlanCheck');
 // @desc     Create Technicianlist
 // @access   Public
 router.post('/create', async (req, res) => {
-  const {
-    planName,
-    business,
-    equipment,
-    assignMainComponent,
-    notesMainComponent,
-    assignSecondaryComponent,
-    notesSecondaryComponent
-  } = req.body;
+  const { planName, business, equipments } = req.body;
 
   try {
     let maintenanceePlanCheck = new MaintenanceePlanCheck({
       planName,
       business,
-      equipment,
-      assignMainComponent,
-      notesMainComponent,
-      assignSecondaryComponent,
-      notesSecondaryComponent
+      equipments
     });
 
     technicianlist = await maintenanceePlanCheck.save();
