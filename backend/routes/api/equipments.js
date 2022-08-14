@@ -29,8 +29,8 @@ router.post('/create', async (req, res) => {
         location: fields.location,
         model: fields.model,
         file: fileContent,
-        mainComponentlists: fields.mainComponentlists,
-        secondaryLists: fields.secondaryLists
+        mainComponentlists: JSON.parse(fields.mainComponentlists),
+        secondaryLists: JSON.parse(fields.secondaryLists)
       });
 
       equipment = await equipment.save();

@@ -9,26 +9,7 @@ const MaintenacePlanCheckSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  equipment: {
-    type: String,
-    required: true
-  },
-  assignMainComponent: {
-    type: String,
-    required: true
-  },
-  notesMainComponent: {
-    type: String,
-    required: true
-  },
-  assignSecondaryComponent: {
-    type: String,
-    required: true
-  },
-  notesSecondaryComponent: {
-    type: String,
-    required: true
-  },
+  equipments: [],
   date: {
     type: Date,
     default: Date.now
