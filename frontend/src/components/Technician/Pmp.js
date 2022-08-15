@@ -6,6 +6,7 @@ function Pmp() {
   const navigate = useNavigate();
   const [plans, setPlans] = useState([]);
   const [selectedPlan, setSelectedPlan] = useState();
+  const [selectedTechnician, setSelectedTechnician] = useState();
 
   useEffect(() => {
     async function getPlans() {
@@ -13,7 +14,6 @@ function Pmp() {
       const res = await api.get('/maintenanceplanchecklists/getPlans');
       setPlans(res.data);
     }
-
     getPlans();
   }, []);
 
@@ -28,14 +28,10 @@ function Pmp() {
 
   async function nextPage() {
     if (selectedPlan) {
-      navigate('/technician/plan?planId=' + selectedPlan);
+      navigate(`/technician/plan?planId=${selectedPlan}&technicianId=${selectedTechnician}`);
     } else {
       alert('Please Select Plan');
     }
-  }
-
-  async function changePlan(e) {
-    setSelectedPlan(e.target.value);
   }
 
   return (
@@ -52,7 +48,7 @@ function Pmp() {
           <p>Technician Name</p>
           <select
             className="border border-[#5C6BC0] px-2 py-2 w-full rounded shadow-sm mt-2"
-            onChange={(e) => changePlan(e)}>
+            onChange={(e) => setSelectedTechnician(e.target.value)}>
             <option>Select Technician</option>
             {technicians.map((row, key) => {
               return (
@@ -67,7 +63,7 @@ function Pmp() {
           <p>Pick Plan</p>
           <select
             className="border border-[#5C6BC0] px-2 py-2 w-full rounded shadow-sm mt-2"
-            onChange={(e) => changePlan(e)}>
+            onChange={(e) => setSelectedPlan(e.target.value)}>
             <option>Select Plan</option>
             {plans.map((row, key) => {
               return (
