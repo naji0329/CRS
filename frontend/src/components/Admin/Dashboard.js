@@ -25,12 +25,12 @@ function Dashboard() {
           </Link>
           <Link to={'/admin/customerprofile/get'}>
             <div className="px-6 py-4 border border-[#5C6BC0] text-[#5C6BC0] cursor-pointer font-medium rounded shadow-lg">
-              Create Customer profile
+              Customer profiles
             </div>
           </Link>
-          <Link to={'/admin/secondarylist/create'}>
+          <Link to={'/admin/secondarylist/get'}>
             <div className="px-6 py-4 border border-[#5C6BC0] text-[#5C6BC0] cursor-pointer font-medium rounded shadow-lg">
-              Create Secondary list items
+              Secondary list items
             </div>
           </Link>
           <Link to={'/admin/equipment/create'}>
