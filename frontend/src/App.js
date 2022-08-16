@@ -23,6 +23,9 @@ import CreateMaintenancePlanCheckList from './components/Admin/MaintenancePlanCh
 // import TechnicianDashboard from './components/Technician/Dashboard';
 import Pmp from './components/Technician/Pmp';
 import Oicl from './components/Technician/Oicl';
+import Technicianlist from './components/Admin/Technicianlist/List';
+
+import './App.scss';
 
 function App() {
   // useEffect(() => {
@@ -50,6 +53,7 @@ function App() {
 
           <Route path="/admin/dashboard" element={<AdminDashboard />} />
           <Route path="/admin/technicianlist/create" element={<CreateTechnicianlist />} />
+          <Route path="/admin/technicianlist/get" element={<Technicianlist />} />
           <Route path="/admin/maincomponentlist/create" element={<CreateMainComponentList />} />
           <Route path="/admin/customerprofile/create" element={<CreateCustomerProfile />} />
           <Route path="/admin/secondarylist/create" element={<CreateSecondaryList />} />

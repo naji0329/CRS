@@ -3,10 +3,12 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 // import { setAlert } from '../../../actions/alert';
 import { createTechnicianlist } from '../../../actions/technicianlist';
+import { setAlert } from '../../../actions/alert';
 
 function Create() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [isLoading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -19,9 +21,17 @@ function Create() {
 
   const onSubmit = async (e) => {
     e.preventDefault();
+
+    if (!name || !email || !phonenumber) {
+      dispatch(setAlert('Pease input informations.', 'warning'));
+      return;
+    }
+
+    setLoading(true);
     const res = await dispatch(createTechnicianlist(formData));
+    setLoading(false);
     if (res) {
-      navigate('/admin/dashboard');
+      navigate('/admin/technicianlist/get');
     }
   };
 
@@ -68,14 +78,15 @@ function Create() {
               />
             </div>
             <div className="mt-10 flex justify-center gap-5">
-              <Link to={'/admin/dashboard'}>
+              <Link to={'/admin/technicianlist/get'}>
                 <button className="w-32 px-6 py-3 border border-[#5C6BC0] text-[#5C6BC0] cursor-pointer font-medium rounded shadow-lg">
                   Back
                 </button>
               </Link>
               <input
                 type="submit"
-                value={'Create'}
+                disabled={isLoading}
+                value={isLoading ? 'Loading' : 'Create'}
                 className="w-32 px-6 py-3 border border-[#5C6BC0] text-[#5C6BC0] cursor-pointer font-medium rounded shadow-lg"
               />
             </div>

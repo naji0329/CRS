@@ -1,0 +1,21 @@
+.table {
+  @apply rounded-3xl w-full text-black;
+
+  thead {
+    @apply bg-white;
+
+    tr th {
+      @apply p-2 py-2 font-medium border border-black/25;
+    }
+  }
+
+  tbody {
+    @apply bg-white;
+
+    tr td {
+      @apply p-1 text-sm sm:p-2 border border-black/25 text-center;
+      // display: flex;
+      // align-items: center;
+    }
+  }
+}
