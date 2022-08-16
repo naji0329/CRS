@@ -18,9 +18,9 @@ function Dashboard() {
               Technician List
             </div>
           </Link>
-          <Link to={'/admin/maincomponentlist/create'}>
+          <Link to={'/admin/maincomponentlist/get'}>
             <div className="px-6 py-4 border border-[#5C6BC0] text-[#5C6BC0] cursor-pointer font-medium rounded shadow-lg">
-              Create main component list items
+              Main Component List Items
             </div>
           </Link>
           <Link to={'/admin/customerprofile/create'}>
