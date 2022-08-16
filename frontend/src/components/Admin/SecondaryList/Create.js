@@ -3,10 +3,12 @@ import { Link, useNavigate } from 'react-router-dom';
 // import { setAlert } from '../../../actions/alert';
 import { useDispatch } from 'react-redux';
 import { createSecondaryList } from '../../../actions/secondarylist';
+import { setAlert } from '../../../actions/alert';
 
 function Create() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [isLoading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     description: ''
@@ -43,6 +45,20 @@ function Create() {
 
   const onSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
+
+    if (!file) {
+      dispatch(setAlert('Pease select File.', 'warning'));
+      return;
+    }
+    if (!name) {
+      dispatch(setAlert('Pease enter name.', 'warning'));
+      return;
+    }
+    if (!description) {
+      dispatch(setAlert('Pease enter description.', 'warning'));
+      return;
+    }
 
     let newFormdata = new FormData();
     newFormdata.append('name', name);
@@ -50,8 +66,9 @@ function Create() {
     newFormdata.append('file', file);
 
     const res = await dispatch(createSecondaryList(newFormdata));
+    setLoading(false);
     if (res) {
-      navigate('/admin/dashboard');
+      navigate('/admin/secondarylist/get');
     }
   };
 
@@ -114,14 +131,15 @@ function Create() {
               </div>
             </div>
             <div className="mt-10 flex justify-center gap-5">
-              <Link to={'/admin/dashboard'}>
+              <Link to={'/admin/secondarylist/get'}>
                 <button className="w-32 px-6 py-3 border border-[#5C6BC0] text-[#5C6BC0] cursor-pointer font-medium rounded shadow-lg">
                   Back
                 </button>
               </Link>
               <input
                 type="submit"
-                value={'Create'}
+                disabled={isLoading}
+                value={isLoading ? 'Loading' : 'Create'}
                 className="w-32 px-6 py-3 border border-[#5C6BC0] text-[#5C6BC0] cursor-pointer font-medium rounded shadow-lg"
               />
             </div>
