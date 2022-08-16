@@ -148,7 +148,7 @@ function Create() {
               </div>
             </div>
             <div className="mt-10 flex justify-center gap-5">
-              <Link to={'/admin/dashboard'}>
+              <Link to={'/admin/maincomponentlist/get'}>
                 <button className="w-32 px-6 py-3 border border-[#5C6BC0] text-[#5C6BC0] cursor-pointer font-medium rounded shadow-lg">
                   Back
                 </button>
