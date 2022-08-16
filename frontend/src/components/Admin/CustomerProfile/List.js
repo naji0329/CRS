@@ -7,7 +7,7 @@ function List() {
 
   useEffect(() => {
     async function getListData() {
-      const res = await api.get('/technicianlists');
+      const res = await api.get('/customers');
       setList(res.data);
     }
     getListData();
@@ -21,14 +21,14 @@ function List() {
             <img src="/img/logo.png" className="cursor-pointer" alt="" />
           </Link>
         </div>
-        <h1 className="text-4xl font-bold underline text-center">Technician List</h1>
+        <h1 className="text-4xl font-bold underline text-center">Customer Profiles</h1>
         <div className="mt-10 flex justify-end gap-5">
           <Link to={'/admin/dashboard'}>
             <div className="px-2 py-2 w-32 border border-[#5C6BC0] text-[#5C6BC0] cursor-pointer font-medium rounded shadow-lg text-center">
               Back
             </div>
           </Link>
-          <Link to={'/admin/technicianlist/create'}>
+          <Link to={'/admin/customerprofile/create'}>
             <div className="px-2 py-2 w-32 border border-[#5C6BC0] text-[#5C6BC0] cursor-pointer font-medium rounded shadow-lg text-center">
               Create
             </div>
@@ -39,9 +39,11 @@ function List() {
             <thead>
               <tr>
                 <th>#</th>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Phone Number</th>
+                <th>Business Name</th>
+                <th>Address</th>
+                <th>Contact Name</th>
+                <th>Contact Email Address</th>
+                <th>Contact Phone Number</th>
               </tr>
             </thead>
             <tbody>
@@ -49,9 +51,11 @@ function List() {
                 return (
                   <tr key={key}>
                     <td>{key + 1}</td>
-                    <td>{row.name}</td>
-                    <td>{row.email}</td>
-                    <td>{row.phonenumber}</td>
+                    <td>{row.business_name}</td>
+                    <td>{row.address}</td>
+                    <td>{row.contact_name}</td>
+                    <td>{row.contact_email_address}</td>
+                    <td>{row.contact_phone_number}</td>
                   </tr>
                 );
               })}

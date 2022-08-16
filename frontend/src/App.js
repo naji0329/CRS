@@ -20,6 +20,8 @@ import CreateMainComponentList from './components/Admin/MainComponentList/Create
 import MainComponentList from './components/Admin/MainComponentList/List';
 
 import CreateCustomerProfile from './components/Admin/CustomerProfile/Create';
+import CustomerProfileList from './components/Admin/CustomerProfile/List';
+
 import CreateSecondaryList from './components/Admin/SecondaryList/Create';
 import CreateEquipmentProfile from './components/Admin/EquipmentProfile/Create';
 import CreateMaintenancePlanCheckList from './components/Admin/MaintenancePlanCheckList/Create';
@@ -63,6 +65,8 @@ function App() {
           <Route path="/admin/maincomponentlist/get" element={<MainComponentList />} />
 
           <Route path="/admin/customerprofile/create" element={<CreateCustomerProfile />} />
+          <Route path="/admin/customerprofile/get" element={<CustomerProfileList />} />
+
           <Route path="/admin/secondarylist/create" element={<CreateSecondaryList />} />
           <Route path="/admin/equipment/create" element={<CreateEquipmentProfile />} />
           <Route
