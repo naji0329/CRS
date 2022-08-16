@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { createCustomer } from '../../../actions/customer';
@@ -6,6 +6,7 @@ import { createCustomer } from '../../../actions/customer';
 function Create() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [isLoading, setLoading] = useEffect(false);
   const [formData, setFormData] = useState({
     business_name: '',
     address: '',
@@ -21,8 +22,9 @@ function Create() {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-
+    setLoading(true);
     const res = await dispatch(createCustomer(formData));
+    setLoading(false);
     if (res) {
       navigate('/admin/dashboard');
     }
@@ -91,14 +93,15 @@ function Create() {
               />
             </div>
             <div className="mt-10 flex justify-center gap-5">
-              <Link to={'/admin/dashboard'}>
+              <Link to={'/admin/customerprofile/get'}>
                 <button className="w-32 px-6 py-3 border border-[#5C6BC0] text-[#5C6BC0] cursor-pointer font-medium rounded shadow-lg">
                   Back
                 </button>
               </Link>
               <input
                 type="submit"
-                value={'Create'}
+                disabled={isLoading}
+                value={isLoading ? 'Loading' : 'Create'}
                 className="w-32 px-6 py-3 border border-[#5C6BC0] text-[#5C6BC0] cursor-pointer font-medium rounded shadow-lg"
               />
             </div>
