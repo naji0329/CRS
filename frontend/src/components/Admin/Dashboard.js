@@ -13,9 +13,9 @@ function Dashboard() {
         <h1 className="text-4xl font-bold underline">Administrator</h1>
 
         <div className="grid sm:grid-cols-2 gap-10 mt-20">
-          <Link to={'/admin/technicianlist/create'}>
+          <Link to={'/admin/technicianlist/get'}>
             <div className="px-6 py-4 border border-[#5C6BC0] text-[#5C6BC0] cursor-pointer font-medium rounded shadow-lg">
-              Create Technician List
+              Technician List
             </div>
           </Link>
           <Link to={'/admin/maincomponentlist/create'}>
