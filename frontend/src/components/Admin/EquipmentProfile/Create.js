@@ -128,7 +128,7 @@ function Create() {
     const res = await dispatch(createEquipment(newFormdata));
     setLoading(false);
     if (res) {
-      navigate('/admin/dashboard');
+      navigate('/admin/equipment/get');
     }
   };
 
