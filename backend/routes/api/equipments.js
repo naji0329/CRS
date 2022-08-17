@@ -6,8 +6,22 @@ const Equipment = require('../../models/Equipment');
 
 var formidable = require('formidable');
 var fs = require('fs');
-// @route    POST api/users
-// @desc     Create SecondaryList
+
+// @route    GET api/equipments
+// @desc     Get Equipment List
+// @access   Public
+router.get('/', async (req, res) => {
+  try {
+    let equipments = await Equipment.find();
+    res.json(equipments);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server error');
+  }
+});
+
+// @route    POST api/equipments/create
+// @desc     Create Equipment
 // @access   Public
 router.post('/create', async (req, res) => {
   try {

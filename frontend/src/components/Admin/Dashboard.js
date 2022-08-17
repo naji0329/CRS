@@ -35,7 +35,7 @@ function Dashboard() {
           </Link>
           <Link to={'/admin/equipment/create'}>
             <div className="px-6 py-4 border border-[#5C6BC0] text-[#5C6BC0] cursor-pointer font-medium rounded shadow-lg">
-              Create Equipment profile
+              Equipment profiles
             </div>
           </Link>
           <Link to={'/admin/maintenanceplanchecklist/create'}>
