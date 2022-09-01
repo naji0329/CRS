@@ -9,6 +9,7 @@ const MaintenacePlanCheckSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  oicl: [],
   equipments: [],
   date: {
     type: Date,

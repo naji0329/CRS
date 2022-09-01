@@ -43,7 +43,7 @@ function Dashboard() {
               Create Maintenance Plan Check List
             </div>
           </Link>
-          <Link to={'/admin/past_maintenance_report/create'}>
+          <Link to={'/admin/past_maintenance_report/get'}>
             <div className="px-6 py-4 border border-[#5C6BC0] text-[#5C6BC0] cursor-pointer font-medium rounded shadow-lg">
               Load a Past Maintenance Report
             </div>
