@@ -23,6 +23,7 @@ import CreateSecondaryList from './components/Admin/SecondaryList/Create';
 import SecondaryList from './components/Admin/SecondaryList/List';
 import CreateEquipmentProfile from './components/Admin/EquipmentProfile/Create';
 import EquipmentProfileList from './components/Admin/EquipmentProfile/List';
+import PastMaintenanceReport from './components/Admin/PastMaintenanceReport/List';
 
 import CreateMaintenancePlanCheckList from './components/Admin/MaintenancePlanCheckList/Create';
 
@@ -77,6 +78,7 @@ function App() {
             path="/admin/maintenanceplanchecklist/create"
             element={<CreateMaintenancePlanCheckList />}
           />
+          <Route path="/admin/past_maintenance_report/get" element={<PastMaintenanceReport />} />
 
           <Route path="/technician/dashboard" element={<Pmp />} />
           <Route path="/technician/pmp" element={<Pmp />} />

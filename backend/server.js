@@ -21,6 +21,7 @@ app.use('/api/maincomponentlists', require('./routes/api/maincomponentlists'));
 app.use('/api/customers', require('./routes/api/customers'));
 app.use('/api/secondarylists', require('./routes/api/secondarylists'));
 app.use('/api/equipments', require('./routes/api/equipments'));
+app.use('/api/oicl', require('./routes/api/oicl'));
 app.use(
   '/api/maintenanceplanchecklists',
   require('./routes/api/maintenanceplanchecklists')
